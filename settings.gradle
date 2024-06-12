@@ -1,0 +1,24 @@
+
+pluginManagement {
+    repositories {
+        maven {
+            name 'standard-repo'
+            url "${artifactoryURL}/artifactory/repo/"
+            credentials {
+                username getProperty('ivy.user')
+                password getProperty('ivy.passwd')
+            }
+            allowInsecureProtocol = true
+        }
+        maven {
+            name 'gradle-plugins'
+            url "${artifactoryURL}/gradle-plugins/"
+            credentials {
+                username getProperty('ivy.user')
+                password getProperty('ivy.passwd')
+            }
+            allowInsecureProtocol = true
+        }
+    }
+}
+rootProject.name = "to-do-list"

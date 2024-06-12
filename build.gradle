@@ -1,0 +1,75 @@
+buildscript {
+    ext {
+        artifactoryCredentials = {
+            username "${project.getProperty('ivy.user')}"
+            password "${project.getProperty('ivy.passwd')}"
+        }
+
+        /*
+         * BuildScript properties
+         */
+        ivyUserHome = System.getenv('IVY_USER_HOME') ?: "${System.getProperty('user.home')}/.ivy2"
+
+        stubsVersion = project['version'] // Capture this here before it changes to NS-format below
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.7.8'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'java'
+}
+
+repositories {
+    mavenLocal()
+    ivy {
+        name 'localRepository'
+        url "$ivyUserHome/local-repo"
+    }
+
+    maven {
+        name 'repo-maven'
+        url "http://artifactory.test.aus.netspend.net/artifactory/repo/"
+        allowInsecureProtocol = true
+        credentials artifactoryCredentials
+    }
+
+    ivy {
+        name 'repo-ivo'
+        url "http://artifactory.test.aus.netspend.net/artifactory/repo/"
+        allowInsecureProtocol = true
+        credentials artifactoryCredentials
+    }
+}
+
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
