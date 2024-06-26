@@ -22,11 +22,10 @@ class ToDoListApplicationTests {
 //        assertEquals(item, listRepository.findById(1L));
 //    }
     public void testDelete(){
-        Item item = new Item(1, "eat", "In progress", 1);
+        Item item = new Item(1, "eat", 0, 1);
         testRepo.addItem(item);
-        Item item2 = new Item(2, "eat", "In progress", 2);
-        testRepo.addItem(item2);
-        testRepo.removeItem(1);
+        Item item2 = new Item(2, "drink", 0, 2);
+        testRepo.deleteByName("drink");
         assertEquals(1, testRepo.getItems().size());
 
     }

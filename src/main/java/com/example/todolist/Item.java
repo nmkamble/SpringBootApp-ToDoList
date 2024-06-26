@@ -5,30 +5,39 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
 public class Item {
+    public enum Status {
+        INCOMPLETE,
+        IN_PROGRESS,
+        COMPLETE
+    }
     @Id
     @GeneratedValue
     long id;
-    //
-    //    public Item() {
-    //
-    //    }
-    //
-    //    public int getId() { return id;}
-    @Getter
-    @Column(nullable = false)
-    String name;
-    @Getter
-    @Setter
-    @Column(nullable = false)
-    String status;
-    @Getter
-    @Column(nullable = false)
-    int list_id;
+
+    @Getter @Column(nullable = false) String name;
+    int status;
+    @Getter @Column(nullable = false) int list_id;
+
+    public void updateStatus(int newStatus) {
+        if(status == 2){
+            status = 0;
+        }
+        else{
+            status++;
+        }
+    }
+
+    public String getStatus(){
+        return Status.values()[status].name();
+    }
+
+
 }
+
 
 
 //    public String getStatus() {

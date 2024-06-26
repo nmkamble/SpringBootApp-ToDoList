@@ -12,8 +12,6 @@ public class ToDoList {
     @Autowired
     private ListRepository listRepository;
 
-    final
-
     public Item getItemById(long itemID){
         return listRepository.findById(itemID);
     }
@@ -29,6 +27,10 @@ public class ToDoList {
 
     public Item addItem(Item item){
         return listRepository.save(item);
+    }
+
+    public void deleteByName(String name) {
+        listRepository.deleteByName(name);
     }
 
 

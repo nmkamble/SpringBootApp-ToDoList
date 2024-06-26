@@ -3,6 +3,7 @@ package com.example.todolist;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,12 @@ public class ToDoListController {
     @PutMapping("/item/remove")
     ResponseEntity<Item> removeItem(@RequestParam("id") int id) {
         return ResponseEntity.ok(list.removeItem(id));
+    }
+    //remove item by name
+    @PutMapping("/item/remove/name")
+    ResponseEntity<List<Item>> removeName(@RequestParam("name") String name) {
+        list.deleteByName(name);
+        return ResponseEntity.ok(list.getItems());
     }
     //Add item to a list
     @PostMapping("/list")
